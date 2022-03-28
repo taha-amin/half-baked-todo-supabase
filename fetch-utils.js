@@ -31,12 +31,18 @@ export async function getTodos() {
     const response = await client
         .from('todos')
         .select('*');
-        
+
     return checkError(response);
 }
 
 export async function completeTodo(id) {
     // find the and update (set complete to true), the todo that matches the correct id
+    const response = await client
+        .from('todos')
+        .update({ is_bought: true })
+        // .match({ id: id });
+        //if (as above) your key name is the same at the variable name pointing to the value, you can rewrite it like so
+        .match({ id });
 
     return checkError(response);
 }
@@ -52,12 +58,12 @@ export function checkAuth() {
 }
 
 export function redirectIfLoggedIn() {
-    if (await getUser()) {
+    if (getUser()) {
         location.replace('./todos');
     }
 }
 
-export function signupUser(email, password) {
+export async function signupUser(email, password) {
     const response = await client.auth.signUp({ email, password });
 
     return response.user;
