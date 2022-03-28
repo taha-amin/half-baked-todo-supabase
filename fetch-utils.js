@@ -39,7 +39,7 @@ export async function completeTodo(id) {
     // find the and update (set complete to true), the todo that matches the correct id
     const response = await client
         .from('todos')
-        .update({ is_bought: true })
+        .update({ complete: true })
         // .match({ id: id });
         //if (as above) your key name is the same at the variable name pointing to the value, you can rewrite it like so
         .match({ id });

@@ -16,19 +16,16 @@ const logoutButton = document.querySelector('#logout');
 const deleteButton = document.querySelector('.delete-button');
 
 todoForm.addEventListener('submit', async (e) => {
-    // on submit, create a todo, reset the form, and display the todos
     e.preventDefault();
-
+    
     //get data from the form
     const data = new FormData(todoForm);
+    
+    // on submit, create a todo, reset the form, and display the todos
+    const todo = data.get('todos');
 
     //call our createToDo function
-
-    await createTodo({
-        amount: data.get('amount'),
-        item: data.get('item'),
-        is_bought: false,
-    });
+    await createTodo(todo);
 
     todoForm.reset();
 
