@@ -7,21 +7,25 @@ export async function createTodo(todo) {
     // create a single incomplete todo with the correct 'todo' property for this user in supabase
     const response = await client
         .from('todos')
-        .insert(todo);
+        .insert({
+            todo: todo,
+            complete: false,
+            user_id: client.auth.user().id
+        });
 
     return checkError(response);
 }
 
 export async function deleteAllTodos() {
     // delete all todos for this user in supabase
-    const user = getUser();
+    //const user = getUser();
 
     const response = await client
         .from('todos')
 
         //delete all items that belong to this user
         .delete()
-        .match({ user_id: user.id });
+        .match({ user_id: client.auth.user().id });
 
     return checkError(response);
 }
@@ -30,7 +34,8 @@ export async function getTodos() {
     // get all todos for this user from supabase
     const response = await client
         .from('todos')
-        .select('*');
+        .select('*')
+        .match({ user_id: client.auth.user().id });
 
     return checkError(response);
 }
@@ -42,7 +47,7 @@ export async function completeTodo(id) {
         .update({ complete: true })
         // .match({ id: id });
         //if (as above) your key name is the same at the variable name pointing to the value, you can rewrite it like so
-        .match({ id });
+        .match({ user_id: client.auth.user().id, id: id });
 
     return checkError(response);
 }

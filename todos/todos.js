@@ -22,7 +22,7 @@ todoForm.addEventListener('submit', async (e) => {
     const data = new FormData(todoForm);
     
     // on submit, create a todo, reset the form, and display the todos
-    const todo = data.get('todos');
+    const todo = data.get('todo');
 
     //call our createToDo function
     await createTodo(todo);
@@ -30,7 +30,7 @@ todoForm.addEventListener('submit', async (e) => {
     todoForm.reset();
 
     //re-fetch and re-append
-    await displayTodos();
+    displayTodos();
 });
 
 async function displayTodos() {
