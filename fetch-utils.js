@@ -8,13 +8,21 @@ export async function createTodo(todo) {
     const response = await client
         .from('todos')
         .insert(todo);
-        
+
     return checkError(response);
 }
 
 export async function deleteAllTodos() {
     // delete all todos for this user in supabase
+    const user = getUser();
 
+    const response = await client
+        .from('todos')
+
+        //delete all items that belong to this user
+        .delete()
+        .match({ user_id: user.id })
+        
     return checkError(response);
 }
 
