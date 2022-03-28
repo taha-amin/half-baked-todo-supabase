@@ -22,13 +22,16 @@ export async function deleteAllTodos() {
         //delete all items that belong to this user
         .delete()
         .match({ user_id: user.id })
-        
+
     return checkError(response);
 }
 
 export async function getTodos() {
     // get all todos for this user from supabase
-
+    const response = await client
+        .from('todos')
+        .select('*');
+        
     return checkError(response);
 }
 
