@@ -21,7 +21,7 @@ export async function deleteAllTodos() {
 
         //delete all items that belong to this user
         .delete()
-        .match({ user_id: user.id })
+        .match({ user_id: user.id });
 
     return checkError(response);
 }
